@@ -1,0 +1,35 @@
+public class Sensor {
+    private double x;
+    private double y;
+    private int subIndice;
+    
+    public Sensor(double x, double y, int subIndice){
+        this.x = x;
+        this.y = y;
+        this.subIndice = subIndice;
+    }
+    
+    public double getX(){
+        return this.x;
+    }
+    
+    public void setX(double x){
+        this.x = x;
+    }
+    
+    public double getY(){
+        return this.y;
+    }
+    
+    public void setY(double y){
+        this.y = y;
+    }
+    
+    public int getSubIndice(){
+        return this.subIndice;
+    }
+    
+    public void setSubIndice(int subIndice){
+        this.subIndice = subIndice;
+    }
+}
