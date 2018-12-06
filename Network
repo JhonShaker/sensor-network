@@ -1,0 +1,72 @@
+import java.util.ArrayList;
+
+
+public class Network {
+    double d;
+    ArrayList<Sensor> sensores = new ArrayList<>();
+    
+    public Network(double d){
+        this.d = d;
+    }
+    
+    private Circunferencia crearCircunferencia(Sensor sensor){
+        Circunferencia circulo = new Circunferencia(this.d,sensor.getX(),sensor.getY());
+        return circulo;
+    }
+    
+    public void agregarSensor(Sensor sensor, ArrayList<Sensor> sensores){
+        sensores.add(sensor);
+    }
+
+    private boolean inCirculo(Circunferencia circulo, Sensor sensor){
+        double variableX = sensor.getX()-circulo.getX0();
+        double variableY = sensor.getY()-circulo.getY0();
+        double ecuacion = Math.pow(variableX, 2)+Math.pow(variableY, 2);
+        if(ecuacion<=Math.pow(d, 2)){
+            return true;
+        }   
+        else{
+            return false;
+        }
+    }
+    
+    public int[] calcularSubconjunto(ArrayList<Sensor> sensores, Sensor sensor){
+        Circunferencia circulo = crearCircunferencia(sensor);
+        ArrayList<Sensor> subconjunto = new ArrayList<>();
+        boolean in = false;
+        for(Sensor item:sensores){
+            in = inCirculo(circulo,item);
+            if(in){
+                subconjunto.add(item);
+            }
+        }    
+        return mostrarSubconjunto(subconjunto);
+    }
+    
+    private int[] mostrarSubconjunto(ArrayList<Sensor> subconjunto){
+        int[] subIndices = new int[subconjunto.size()];
+        int contador = 0;
+        for(Sensor item:subconjunto){
+            subIndices[contador]= item.getSubIndice();
+            contador++;
+        }
+        return subIndices;
+    }
+    
+    public int calcularMaximo(ArrayList<Sensor> sensores){
+        int[] cantidadSubconjuntos = new int[sensores.size()];
+        int contador = 0;
+        for(Sensor item:sensores){
+            cantidadSubconjuntos[contador] = calcularSubconjunto(sensores, item).length;
+            contador++;
+        }
+        int max= cantidadSubconjuntos[0];
+        for(int i=0;i<cantidadSubconjuntos.length;i++){
+            if(max>=cantidadSubconjuntos[i]){
+                max = cantidadSubconjuntos[i];
+            }
+        }
+        return max;
+    }
+    
+}
